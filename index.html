@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>arthur_nunes.exe</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: #00ffcc;
+  font-family: monospace;
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 40px 20px;
+}
+
+#terminal {
+  white-space: pre-line;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  background: #00ffcc;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.gallery {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  padding: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 10px;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: 0.5s;
+}
+
+.gallery img.show {
+  opacity: 1;
+  transform: scale(1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div id="terminal"></div>
+<div class="gallery" id="gallery"></div>
+</div>
+
+<audio id="musica" autoplay loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const linhas = [
+"> booting system...",
+"> loading memories...",
+"> user detected: Arthur Nunes",
+"",
+"> initializing profile...",
+"> role: tennis player 🎾",
+"> skill: programmer 💻",
+"> environment: beach 🌊",
+"> crew: nakama 🏴‍☠️",
+"",
+"> message incoming...",
+"",
+"> feliz aniversário.",
+"> muitos anos de vida.",
+"> muitas felicidades.",
+"> muitos passeios de moto.",
+"> muita dieta que foi quebrada.",
+"> muito treino.",
+"> muito programa.",
+"> vamo vendo.",
+"",
+"> opening memories..."
+];
+
+let i = 0;
+let j = 0;
+let atual = "";
+const velocidade = 30;
+
+function digitar() {
+  const terminal = document.getElementById("terminal");
+
+  if (i < linhas.length) {
+    if (j < linhas[i].length) {
+      atual += linhas[i].charAt(j);
+      terminal.innerHTML = atual + '<span class="cursor"></span>';
+      j++;
+      setTimeout(digitar, velocidade);
+    } else {
+      atual += "\n";
+      j = 0;
+      i++;
+      setTimeout(digitar, 400);
+    }
+  } else {
+    mostrarFotos();
+  }
+}
+
+function mostrarFotos() {
+  const gallery = document.getElementById("gallery");
+
+  for (let i = 1; i <= 20; i++) {
+    let img = document.createElement("img");
+    img.src = `fotos/foto${i}.jpg`;
+    gallery.appendChild(img);
+
+    setTimeout(() => {
+      img.classList.add("show");
+    }, i * 120);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("musica");
+  audio.play().catch(() => {});
+  digitar();
+});
+
+</script>
+
+</body>
+</html>
